@@ -14,8 +14,9 @@ some diferent layouts and arrives at something that I fill could be easily maint
 
 https://avivcarmi.com/finding-the-best-go-project-structure-part-2/
 
-# Impl business logic
-This way I can implement `core/user` without even touching the `infra` side of things. 
+# Draft of business logic impl
+1. This way I can implement `core/user` without even touching the `infra` side of things. 
 
-
+2. Admin logic takes its own service maily because those endpoints wont need to look at the jwt token
+and also that way we can see how a bigger service could look like. 
 
