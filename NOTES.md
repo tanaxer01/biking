@@ -14,4 +14,8 @@ some diferent layouts and arrives at something that I fill could be easily maint
 
 https://avivcarmi.com/finding-the-best-go-project-structure-part-2/
 
+# Impl business logic
+This way I can implement `core/user` without even touching the `infra` side of things. 
+
+
 
