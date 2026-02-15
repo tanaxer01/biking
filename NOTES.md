@@ -20,3 +20,8 @@ https://avivcarmi.com/finding-the-best-go-project-structure-part-2/
 2. Admin logic takes its own service maily because those endpoints wont need to look at the jwt token
 and also that way we can see how a bigger service could look like. 
 
+
+# Draft of infra
+Auth an Crypto are ok, the only thing that could go out of hand is the http part
+I think dividing handlers by service could help. Each handler we should only need to validate input & handle errors ¿?
+

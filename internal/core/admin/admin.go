@@ -1,12 +1,24 @@
 package admin
 
+import "github.com/tanaxer01/biking/pkg/biking"
+
 type Service struct {
-	db DB
+	bikeRepo BikeRepo
+	userRepo UserRepo
 }
 
-type DB interface {
+type BikeRepo interface {
+	InsertBike(*biking.BikeData) error
+	UpdateBikeData(ID int, data *biking.BikeData) error
+	ListBikes() ([]biking.Bike, error)
 }
 
-func NewService(db DB) *Service {
-	return &Service{db: db}
+type UserRepo interface {
+	ListUsers() ([]biking.User, error)
+	UserByID(ID int) (*biking.User, error)
+	UpdateUserData(ID int, data biking.UserData) error
+}
+
+func NewService(bikeRepo BikeRepo, userRepo UserRepo) *Service {
+	return &Service{bikeRepo: bikeRepo, userRepo: userRepo}
 }

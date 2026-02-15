@@ -14,9 +14,9 @@ type Service struct {
 
 type DB interface {
 	InsertUser(data biking.InsertUser) error
-	UserById(id int) (*biking.User, error)
+	UserByID(id int) (*biking.User, error)
 	UserByEmail(email string) (*biking.User, error)
-	UpdateUserData(biking.UserData) error
+	UpdateUserData(ID int, data biking.UserData) error
 }
 
 type Crypto interface {
@@ -83,7 +83,7 @@ func (s *Service) GetProfile(tokenString string) (*biking.UserData, error) {
 	if id == 0 {
 	}
 
-	user, err := s.db.UserById(id)
+	user, err := s.db.UserByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -105,5 +105,5 @@ func (s *Service) UpdateProfile(tokenString string, input biking.UserData) error
 	if id == 0 {
 	}
 
-	return s.db.UpdateUserData(input)
+	return s.db.UpdateUserData(id, input)
 }

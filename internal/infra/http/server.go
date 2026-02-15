@@ -10,7 +10,7 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func NewServer(addr string) *Server {
+func NewServer(addr string, userHandler *UserHandler, adminHandler *AdminHandler) *Server {
 	s := &Server{addr: addr}
 
 	mux := http.NewServeMux()
@@ -20,7 +20,8 @@ func NewServer(addr string) *Server {
 		w.Write([]byte("Server is up"))
 	})
 
-	// TODO: Add handlers
+	s.registerUserRoutes(mux, userHandler)
+	s.registerAdminRoutes(mux, adminHandler)
 
 	s.httpServer = &http.Server{Addr: addr, Handler: mux}
 	return s
@@ -34,4 +35,22 @@ func (s *Server) Start() error {
 func (s *Server) Close() error {
 	// TODO: Change for Shutdown
 	return s.httpServer.Close()
+}
+
+func (s *Server) registerUserRoutes(mux *http.ServeMux, handler *UserHandler) {
+	mux.HandleFunc("POST /user/register", handler.Register)
+	mux.HandleFunc("POST /user/login", handler.Login)
+	mux.HandleFunc("GET /user/profile", handler.GetProfile)
+	mux.HandleFunc("PATCH /user/profile", handler.UpdateProfile)
+}
+
+func (s *Server) registerAdminRoutes(mux *http.ServeMux, handler *AdminHandler) {
+	// Bike
+
+	// User
+	mux.HandleFunc("GET /admin/users", handler.ListUsers)
+	mux.HandleFunc("GET /admin/users/{user_id}", handler.GetUser)
+	mux.HandleFunc("PATCH /admin/users/{user_id}", handler.UpdateUser)
+
+	// Rental
 }

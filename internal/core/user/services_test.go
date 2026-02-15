@@ -1,6 +1,10 @@
 package user
 
-func TestInsertExistingUser() {}
+func TestInsertExistingUser() {
+
+	// sqlite3.Error - UNIQUE constraint failed: users.email
+
+}
 
 func TestLoginWrongPassword() {}
 

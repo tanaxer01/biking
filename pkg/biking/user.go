@@ -1,11 +1,9 @@
 package biking
 
-import "time"
-
 type UserData struct {
-	Email     string `json:"email" validate:"email"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	Email     string `json:"email" validate:"email,required"`
+	FirstName string `json:"first_name" validate:"required"`
+	LastName  string `json:"last_name" validate:"required"`
 }
 
 type InsertUser struct {
@@ -19,8 +17,9 @@ type LoginUser struct {
 }
 
 type User struct {
-	ID        int
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID             int    `json:"id"`
+	CreatedAt      string `json:"created_at"`
+	UpdatedAt      string `json:"updated_at"`
+	HashedPassword string
 	UserData
 }
