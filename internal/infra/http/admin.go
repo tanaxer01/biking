@@ -80,11 +80,56 @@ func (h *AdminHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AdminHandler) InsertBike(w http.ResponseWriter, r *http.Request) {
+	var input biking.BikeData
 
+	err := json.NewDecoder(r.Body).Decode(&input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	validate := validator.New(validator.WithRequiredStructEnabled())
+	if err := validate.Struct(input); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err = h.service.InsertBike(input)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("OK"))
 }
 
 func (h *AdminHandler) UpdateBike(w http.ResponseWriter, r *http.Request) {
+	var data biking.BikeData
 
+	BikeID := r.PathValue("bike_id")
+	ID, err := strconv.Atoi(BikeID)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err = json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	validate := validator.New(validator.WithRequiredStructEnabled())
+	if err := validate.Struct(data); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	err = h.service.UpdateBike(ID, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func (h *AdminHandler) ListBikes(w http.ResponseWriter, r *http.Request) {
@@ -99,5 +144,4 @@ func (h *AdminHandler) ListBikes(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-
 }

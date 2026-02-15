@@ -1,7 +1,5 @@
 package biking
 
-import "time"
-
 type BikeData struct {
 	Available bool    `json:"is_available"`
 	Latitude  float64 `json:"latitude"`
@@ -10,7 +8,7 @@ type BikeData struct {
 
 type Bike struct {
 	ID        int
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt string
+	UpdatedAt string
 	BikeData
 }

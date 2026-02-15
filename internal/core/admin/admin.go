@@ -8,8 +8,8 @@ type Service struct {
 }
 
 type BikeRepo interface {
-	InsertBike(*biking.BikeData) error
-	UpdateBikeData(ID int, data *biking.BikeData) error
+	InsertBike(biking.BikeData) error
+	UpdateBikeData(ID int, data biking.BikeData) error
 	ListBikes() ([]biking.Bike, error)
 }
 

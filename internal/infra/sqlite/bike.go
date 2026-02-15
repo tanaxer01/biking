@@ -15,9 +15,9 @@ func NewBikeRepository(db *sql.DB) *BikeRepository {
 	return &BikeRepository{db: db}
 }
 
-func (r *BikeRepository) InsertBike(data *biking.BikeData) error {
+func (r *BikeRepository) InsertBike(data biking.BikeData) error {
 	_, err := r.db.Exec(
-		`INSERT INTO bikes (latitude, longitude) VALUES (?, ?, ?, ?)`,
+		`INSERT INTO bikes (latitude, longitude) VALUES (?, ?)`,
 		data.Latitude,
 		data.Longitude,
 	)
@@ -25,7 +25,7 @@ func (r *BikeRepository) InsertBike(data *biking.BikeData) error {
 	return err
 }
 
-func (r *BikeRepository) UpdateBikeData(ID int, data *biking.BikeData) error {
+func (r *BikeRepository) UpdateBikeData(ID int, data biking.BikeData) error {
 	_, err := r.db.Exec(
 		`UPDATE bikes SET is_available = ?, latitude = ?, longitude = ?, updated_at = ? WHERE id = ?`,
 		data.Available,

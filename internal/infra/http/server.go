@@ -46,6 +46,9 @@ func (s *Server) registerUserRoutes(mux *http.ServeMux, handler *UserHandler) {
 
 func (s *Server) registerAdminRoutes(mux *http.ServeMux, handler *AdminHandler) {
 	// Bike
+	mux.HandleFunc("GET /admin/bikes", handler.ListBikes)
+	mux.HandleFunc("POST /admin/bikes", handler.InsertBike)
+	mux.HandleFunc("PATCH /admin/bikes/{bike_id}", handler.UpdateBike)
 
 	// User
 	mux.HandleFunc("GET /admin/users", handler.ListUsers)
